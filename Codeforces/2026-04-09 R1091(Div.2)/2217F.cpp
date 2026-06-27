@@ -20,22 +20,39 @@
 #define umap unordered_map
 #define mset multiset
 using namespace std;
+using i128 = __int128_t;
 void solve() {
-    int n;
-    cin >> n;
-    vl a(n + 1);
-    rep(i, 1, n) cin >> a[i];
-    ll tem = 0;
-    int idx = -1;
-    ll mixx = LLONG_MAX;
-    rep(i, 1, n) {
-        if (tem + (n - i + 1) * a[i] < mixx) {
-            idx = i;
-            mixx = tem + (n - i + 1) * a[i];
+    ll x1, x2;
+    cin >> x1 >> x2;
+    const ll MX = 21;
+    auto calc = [&](ll x, ll y) -> ll {
+        vl pre(MX);
+        pre[0] = ((y & 1) == 0);
+        rep(i, 1, MX - 1) pre[i] = pre[i - 1] + (((y >> i) & 1) == 0);
+        ll res = 0;
+        frep(i, MX - 1, 0) {
+            if (x >> i & 1) {
+                res += (i == 0 ? 1 : (1LL << pre[i - 1]));
+                if (y >> i & 1) return res;
+            }
         }
-        tem += a[i];
+        return res + 1;
+    };
+    ll ans = 0;
+    ll mixx = LLONG_MAX;
+    rep(i, 0, x1 - 1) {
+        if (x2 < 1 + i) {
+            mixx = 0;
+            ans = i;
+            break;
+        }
+        ll cnt = calc((x2 - 1 - i) / 2, i) * (1LL << popcount((unsigned)i));
+        if (cnt < mixx) {
+            mixx = cnt;
+            ans = i;
+        }
     }
-    cout << idx << endl;
+    cout << ans + 1 << ' ' << x1 << endl;
     return;
 }
 int main() {
