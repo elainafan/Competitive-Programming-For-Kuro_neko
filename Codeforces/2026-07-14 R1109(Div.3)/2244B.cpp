@@ -3,8 +3,8 @@
 #define ll long long
 #define ull unsigned long long
 #define lowbit(x) (x & (-x))
-#define rep(i, x, y) for (int i = x; i <= y; i++)
-#define frep(i, x, y) for (int i = x; i >= y; i--)
+#define rep(i, x, y) for (ll i = x; i <= y; i++)
+#define frep(i, x, y) for (ll i = x; i >= y; i--)
 #define all(x) (x).begin(), (x).end()
 #define all2(x) (x).rbegin(), (x).rend()
 #define sz(a) (int)a.size()
